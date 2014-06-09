@@ -6,36 +6,58 @@ using System.Threading.Tasks;
 
 namespace Misc_Sudoku_Solver_.Classes
 {
-    protected class Cell
+    public class Cell
     {
         #region private members
         private int value;
         private Position position;
         private bool locked;
+        private SudokuRegion region;
         #endregion
 
         #region properties
-        protected Position Position
+        public Position Position
         {
             get { return this.position; }
         }
-        protected int Value
+        public int Value
         {
             get {return this.value;}
             set { this.value = this.Locked ? this.value : value; }
         }
 
-        protected bool Locked 
+        public String StringValue()
+        {
+            return this.value == 0 ? "" : this.value.ToString();
+        }
+
+        public bool Locked 
         {
             get { return this.locked; }
             set { this.locked = value; }
         }
         #endregion
 
-        protected Cell(Position position)
+        public SudokuRegion Region
         {
-            this.position.Row = position.Row;
-            this.position.Column = position.Column;
+            get {return this.region;}
+            set { this.region = value; }
+        }
+
+        public Cell(Position position)
+        {
+            this.position = position;
+        }
+
+        public bool InitializeValue(int value)
+        {
+            if(value > 0 && value <= (GlobalConstants.CELLS_IN_REGION_ROW * GlobalConstants.CELLS_IN_REGION_COLUMN))
+            {
+                this.value = value;
+                this.locked = true;
+                return true;
+            }
+            return false;
         }
     }
 }

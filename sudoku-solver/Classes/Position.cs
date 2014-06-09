@@ -8,7 +8,26 @@ namespace Misc_Sudoku_Solver_.Classes
 {
     public struct Position
     {
-        public int Row { get; set; }
-        public int Column { get; set; }
+        #region private members
+        private int row;
+        private int column;
+        #endregion
+
+        #region Members;
+        public int Row
+        {
+            get { return this.row; }
+        }
+        public int Column 
+        {
+            get { return this.column; }
+        }
+        #endregion
+
+        public Position(int row, int column)
+        {
+            this.row = row;
+            this.column = column;
+        }
     }
 }

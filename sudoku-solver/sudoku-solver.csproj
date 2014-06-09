@@ -48,7 +48,7 @@
     <Compile Include="Classes\Cell.cs" />
     <Compile Include="Classes\GlobalConstants.cs" />
     <Compile Include="Classes\Position.cs" />
-    <Compile Include="Classes\Region.cs" />
+    <Compile Include="Classes\SudokuRegion.cs" />
     <Compile Include="FViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sudoku.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
