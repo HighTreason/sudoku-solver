@@ -34,12 +34,14 @@ namespace Misc_Sudoku_Solver_.Classes
         }
         #endregion
 
+        #region Constructors
         public SudokuRegion(Position position)
         {
             this.position = position;
             this.cells = new Cell[GlobalConstants.CELLS_IN_REGION_ROW, GlobalConstants.CELLS_IN_REGION_COLUMN];
             InitializeComponents();
         }
+        #endregion
 
         private void InitializeComponents()
         {
@@ -51,6 +53,60 @@ namespace Misc_Sudoku_Solver_.Classes
                     this.cells[row, column].Region = this;
                 }
             }
+        }
+
+        public bool IsValid()
+        {
+            bool[] numbers = new bool[GlobalConstants.CELLS_IN_REGION_ROW * GlobalConstants.CELLS_IN_REGION_COLUMN];
+            numbers.Initialize();
+
+            bool duplication = false;
+
+            Cell cell;
+
+            for (int row = 0; row < GlobalConstants.CELLS_IN_REGION_ROW; row++)
+            {
+                for (int column = 0; column < GlobalConstants.CELLS_IN_REGION_COLUMN; column++)
+                {
+                    cell = this.cells[row, column];
+                    if(cell.HasValue)
+                    {
+                        if(numbers[cell.Value - 1])
+                        {
+                            duplication = true;
+                            break;
+                        }
+                        else
+                        {
+                            numbers[cell.Value - 1] = true;
+                        }
+                    }
+                }
+            }
+
+            return !duplication;
+        }
+
+        public int NumberOfUnknownsInRow(int rowPosition)
+        {
+            int numberOfUnknowns = 0;
+            for (int column = 0; column < GlobalConstants.CELLS_IN_REGION_COLUMN; column++)
+            {
+                if (!this.cells[rowPosition, column].HasValue)
+                    numberOfUnknowns++;
+            }
+            return numberOfUnknowns;
+        }
+
+        internal int NumberOfUnknownsInColumn(int columnPosition)
+        {
+            int numberOfUnknowns = 0;
+            for (int row = 0; row < GlobalConstants.CELLS_IN_REGION_ROW; row++)
+            {
+                if (!this.cells[row, columnPosition].HasValue)
+                    numberOfUnknowns++;
+            }
+            return numberOfUnknowns;
         }
     }
 }

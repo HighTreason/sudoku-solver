@@ -26,6 +26,11 @@ namespace Misc_Sudoku_Solver_.Classes
             set { this.value = this.Locked ? this.value : value; }
         }
 
+        public bool HasValue
+        {
+            get { return this.Value == 0 ? false : true; }
+        }
+
         public String StringValue()
         {
             return this.value == 0 ? "" : this.value.ToString();

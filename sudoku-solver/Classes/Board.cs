@@ -22,16 +22,16 @@ namespace Misc_Sudoku_Solver_.Classes
 
         public Board()
         {
-            this.regions = new SudokuRegion[GlobalConstants.REGIONS_IN_ROW, GlobalConstants.REGIONS_IN_COLUMN];
+            this.regions = new SudokuRegion[GlobalConstants.REGIONS_IN_COLUMN, GlobalConstants.REGIONS_IN_ROW];
             InitializeComponents();
             FillBoardWithGivenData();
         }
 
         private void InitializeComponents()
         {
-            for (int row = 0; row < GlobalConstants.REGIONS_IN_ROW; row++)
+            for (int row = 0; row < GlobalConstants.REGIONS_IN_COLUMN; row++)
             {
-                for (int column = 0; column < GlobalConstants.REGIONS_IN_COLUMN; column++)
+                for (int column = 0; column < GlobalConstants.REGIONS_IN_ROW; column++)
                 {
                     this.regions[row, column] = new SudokuRegion(new Position(row, column));
                     this.regions[row, column].Board = this;
@@ -39,6 +39,33 @@ namespace Misc_Sudoku_Solver_.Classes
             }
         }
 
+        public int NumberOfUnknownsInRow(int rowIndex)
+        {
+            int regionRowIndex = rowIndex / GlobalConstants.REGIONS_IN_ROW;
+            int cellRowIndex = rowIndex % GlobalConstants.CELLS_IN_REGION_ROW;
+            int numberOfUnknowns = 0;
+
+            for (int column = 0; column < GlobalConstants.REGIONS_IN_ROW; column++)
+            {
+                numberOfUnknowns += this.regions[regionRowIndex, column].NumberOfUnknownsInRow(cellRowIndex);
+            }
+
+            return numberOfUnknowns;
+        }
+
+        public int NumberOfUnknownsInColumn(int columnIndex)
+        {
+            int regionColumnIndex = columnIndex / GlobalConstants.REGIONS_IN_COLUMN;
+            int cellColumnIndex = columnIndex % GlobalConstants.CELLS_IN_REGION_COLUMN;
+            int numberOfUnknowns = 0;
+
+            for (int row = 0; row < GlobalConstants.REGIONS_IN_COLUMN; row++)
+            {
+                numberOfUnknowns += this.regions[row, regionColumnIndex].NumberOfUnknownsInColumn(cellColumnIndex);
+            }
+
+            return numberOfUnknowns;
+        }
 
         public void FillBoardWithGivenData()
         {

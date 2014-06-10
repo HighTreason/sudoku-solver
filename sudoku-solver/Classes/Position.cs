@@ -29,5 +29,10 @@ namespace Misc_Sudoku_Solver_.Classes
             this.row = row;
             this.column = column;
         }
+
+        public override string ToString()
+        {
+            return "[row: '" + this.Row + " column: '" + this.column + "']";
+        }
     }
 }
